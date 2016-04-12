@@ -1,3 +1,7 @@
+/*
+  Example code to get a MCP3*08 running with an ESP8266
+  for DiY energy monitoring solutions
+ */
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include "MCP3208.h"
@@ -9,19 +13,26 @@
 
 MCP3208 adc(SPICLOCK,DATAOUT,DATAIN,SELPIN);
 
-unsigned long previousMillis = 0;
+// ADC read time "delays"
+unsigned long adcTime;
+unsigned long adcDelay = 1000;
 
-const long interval = 6000;
+// stub function for resetting ADC read time delay
+void setAdcDelay() {
+  adcTime = millis() + adcDelay;
+}
 
 void setup(){
   Serial.begin(115200);
   Serial.println('Setup complete.');
+  setAdcDelay();
 }
 
 void loop(){
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= interval) {
-    Serial.println(adc.readADC(0));
-    previousMillis = currentMillis;
-  }
+  
+  if (millis() >= adcTime) {
+	  Serial.println(adc.readADC(0));
+	  setAdcDelay();
+ }
+  
 }
