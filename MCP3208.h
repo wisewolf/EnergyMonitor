@@ -1,5 +1,5 @@
 /*
-  MCP3008.h - Library for communicating with MCP3008 Analog to digital converter.
+  MCP3208.h - Library for communicating with MCP3008 Analog to digital converter.
   Created by Uros Petrevski, Nodesign.net 2013
   Released into the public domain.
 
@@ -7,6 +7,7 @@
   http://learn.adafruit.com/send-raspberry-pi-data-to-cosm/python-script
 
   Modified to MCP3208 by JF Payeur
+  Further corrected by Nuno Correia
 */
 
 #ifndef MCP3208_h
