@@ -9,11 +9,19 @@
 
 MCP3208 adc(SPICLOCK,DATAOUT,DATAIN,SELPIN);
 
+unsigned long previousMillis = 0;
+
+const long interval = 6000;
+
 void setup(){
   Serial.begin(115200);
   Serial.println('Setup complete.');
 }
 
 void loop(){
-  Serial.println(adc.readADC(0));
+  unsigned long currentMillis = millis();
+  if (currentMillis - previousMillis >= interval) {
+    Serial.println(adc.readADC(0));
+    previousMillis = currentMillis;
+  }
 }
