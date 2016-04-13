@@ -5,6 +5,7 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include "MCP3208.h"
+#include "EmonLib.h"
 
 #define SELPIN D8    //CS
 #define DATAOUT D7   //MOSI
@@ -12,6 +13,7 @@
 #define SPICLOCK D5  //SCLK
 
 MCP3208 adc(SPICLOCK,DATAOUT,DATAIN,SELPIN);
+EnergyMonitor emon1;
 
 // ADC read time "delays"
 unsigned long adcTime;
@@ -24,15 +26,19 @@ void setAdcDelay() {
 
 void setup(){
   Serial.begin(115200);
-  Serial.println('Setup complete.');
+  emon1.current(0, 111.1);             // Current: ADC Channel, calibration.
   setAdcDelay();
 }
 
 void loop(){
-  
+
   if (millis() >= adcTime) {
 	  Serial.println(adc.readADC(0));
-	  setAdcDelay();
+    double Irms = emon1.calcIrms(1480);  // Calculate Irms only
+    Serial.print(Irms*230.0);	       // Apparent power
+    Serial.print(" ");
+    Serial.println(Irms);		       // Irms
+    setAdcDelay();
  }
-  
+
 }
