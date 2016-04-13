@@ -21,23 +21,23 @@
 #endif
 
 // define theoretical vref calibration constant for use in readvcc()
-// 1100mV*1024 ADC steps http://openenergymonitor.org/emon/node/1186
+// 1100mV*4096 ADC steps http://openenergymonitor.org/emon/node/1186
 // override in your code with value for your specific AVR chip
 // determined by procedure described under "Calibrating the internal reference voltage" at
 // http://openenergymonitor.org/emon/buildingblocks/calibration
 #ifndef READVCC_CALIBRATION_CONST
-#define READVCC_CALIBRATION_CONST 1126400L
+#define READVCC_CALIBRATION_CONST 4505600L
 #endif
 
-// to enable 12-bit ADC resolution on Arduino Due, 
+// to enable 12-bit ADC resolution on Arduino Due,
 // include the following line in main sketch inside setup() function:
 //  analogReadResolution(ADC_BITS);
 // otherwise will default to 10 bits, as in regular Arduino-based boards.
-#if defined(__arm__)
+//#if defined(__arm__)
 #define ADC_BITS    12
-#else
+/*#else
 #define ADC_BITS    10
-#endif
+#endif*/
 
 #define ADC_COUNTS  (1<<ADC_BITS)
 
@@ -79,12 +79,12 @@ class EnergyMonitor
     // Variable declaration for emon_calc procedure
     //--------------------------------------------------------------------------------------
 	int sampleV;  							 //sample_ holds the raw analog read value
-	int sampleI;                     
+	int sampleI;
 
 	double lastFilteredV,filteredV;          //Filtered_ is the raw analog value minus the DC offset
-	double filteredI;                  
+	double filteredI;
 	double offsetV;                          //Low-pass filter output
-	double offsetI;                          //Low-pass filter output               
+	double offsetI;                          //Low-pass filter output
 
 	double phaseShiftedV;                             //Holds the calibrated phase shifted voltage.
 
