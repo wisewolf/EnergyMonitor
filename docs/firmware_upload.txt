@@ -1,0 +1,15 @@
+To upload the code to an ESP8266-01 you'll need an FTDI programmer (or similar).
+You can buy one from eBay (http://goo.gl/6YNpvP).
+
+When connecting the programmer to the ESP8266-01, be careful to use 3.3v only.
+
+Wiring:
+
+    RX -> TX
+    TX -> RX
+    CH_PD -> 3.3V
+    GPIO 0 -> GND
+    VCC -> 3.3V
+    GND -> GND
+
+as seen in http://randomnerdtutorials.com/esp8266-web-server/
