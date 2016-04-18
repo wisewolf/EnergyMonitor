@@ -13,6 +13,7 @@ const char* host = "emoncms.org";
 const int   httpPort = 80;
 const char* emoncmsKey = "...";   //emoncms.org write API key
 const char* node = "1";           //This should be an integer
+const int   Vrms = 230;
 
 /************** NodeMCU v1.0 ******************/
 
@@ -87,15 +88,12 @@ void loop(){
     double Irms0 = emon1.calcIrms(1480);  // Calculate Irms only
     double Irms1 = emon2.calcIrms(1480);  // Calculate Irms only
     double Irms2 = emon3.calcIrms(1480);  // Calculate Irms only
-    String sensorReading = String(emon1.calcIrms(1480));
+    String sensorReading = String(Vrms * emon1.calcIrms(1480));
     sensorReading += ",";
-    sensorReading +=  String(emon2.calcIrms(1480));
+    sensorReading +=  String(Vrms * emon2.calcIrms(1480));
     sensorReading += ",";
-    sensorReading +=  String(emon3.calcIrms(1480));
+    sensorReading +=  String(Vrms * emon3.calcIrms(1480));
     sendToEmonCMS(node, sensorReading);
     setAdcDelay();
- }
-
-
-
+  }
 }
