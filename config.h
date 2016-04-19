@@ -4,8 +4,23 @@
    Configuration file
 */
 
-// global includes
-#include <Arduino.h>
+// Configure your CT Phase channel assignment
+// Assume PHASE_R for monophasic installations
+#define PHASE_R 0
+#define PHASE_S 1
+#define PHASE_T 2
+
+// Configure optional Voltage sensor for power factor calculation
+#define PHASE_VOLT_R 3
+#define PHASE_VOLT_S 4
+#define PHASE_VOLT_T 5
+
+// Configure optional CT sensors
+#define PHASE_A 3
+#define PHASE_B 4
+#define PHASE_C 5
+#define PHASE_D 6
+#define PHASE_D 7
 
 // Choose your ESP Module, (defaults to NODEMCU10)
 //#define ESP01
