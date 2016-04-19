@@ -2,40 +2,20 @@
   Example code to get a MCP3*08 running with an ESP8266
   for DiY energy monitoring solutions
  */
-#include <Arduino.h>
+
 #include <ESP8266WiFi.h>
-#include "MCP3208.h"
 #include "EmonLib.h"
+#include "config.h"
 
 const char* ssid = "...";
 const char* password = "...";
-const char* host = "emoncms.org";
+//const char* host = "emoncms.org";
 const int   httpPort = 80;
 const char* emoncmsKey = "...";   //emoncms.org write API key
 const char* node = "1";           //This should be an integer
 const int   Vrms = 230;
 
-/************** NodeMCU v1.0 ******************/
-
-#define SELPIN D8    //CS
-#define DATAOUT D7   //MOSI
-#define DATAIN D6    //MISO
-#define SPICLOCK D5  //SCLK
-
-/*************** ESP8266-01 *******************/
-
-/*
-
-// bitbanging all the way
-// reusing TX RX pins as GPIO
-#define SELPIN 0    //CS
-#define DATAOUT 1   //MOSI
-#define DATAIN 3    //MISO
-#define SPICLOCK 2  //SCLK
-
-*/
-
-MCP3208 adc(SPICLOCK,DATAOUT,DATAIN,SELPIN);
+MCP3208 adc(SPICLOCK, DATAOUT, DATAIN, SELPIN);
 EnergyMonitor emon1, emon2, emon3;
 
 // ADC read time "delays"
@@ -46,7 +26,6 @@ unsigned long adcDelay = 5000;
 void setAdcDelay() {
   adcTime = millis() + adcDelay;
 }
-
 
 void sendToEmonCMS(String nodeId, String data) {
   WiFiClient client;
@@ -76,9 +55,9 @@ void sendToEmonCMS(String nodeId, String data) {
 }
 
 void setup(){
-  emon1.current(0, 111.1);             // Current: ADC Channel, calibration.
-  emon2.current(1, 111.1);             // Current: ADC Channel, calibration.
-  emon3.current(2, 111.1);             // Current: ADC Channel, calibration.
+  emon1.current(0, 111.1,adc);             // Current: ADC Channel, calibration.
+  emon2.current(1, 111.1,adc);             // Current: ADC Channel, calibration.
+  emon3.current(2, 111.1,adc);             // Current: ADC Channel, calibration.
   setAdcDelay();
 }
 
